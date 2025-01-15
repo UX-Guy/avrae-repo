@@ -1,0 +1,53 @@
+- name: Longsword of Wounding
+  automation:
+    - type: variable
+      name: lastDamage
+      value: "0"
+    - type: target
+      target: all
+      effects:
+        - type: attack
+          hit:
+            - type: variable
+              name: lastDamage
+              value: "0"
+            - type: damage
+              damage: 1d8+{strengthMod} [magical slashing] + 2d6 [magical necrotic]
+              overheal: false
+            - type: ieffect2
+              name: Wounded
+              duration: "600"
+              effects: null
+              attacks: []
+              buttons:
+                - label: CON Save (End of Turn)
+                  automation:
+                    - type: target
+                      target: self
+                      effects:
+                        - type: save
+                          stat: dex
+                          fail: []
+                          success:
+                            - type: remove_ieffect
+                              removeParent: always
+                  verb: unable to heal
+                  style: "4"
+                  defaultDC: "15"
+                  defaultAttackBonus: null
+                  defaultCastingMod: null
+              end: false
+              conc: false
+              desc: >-
+                Wounded and unable to heal or regain Hit Points for 1 hour.
+
+
+                Repeat the save at the end of each of its turns, ending the effect on itself on a success.
+              stacking: false
+              save_as: null
+              parent: null
+              target_self: false
+              tick_on_caster: false
+          miss: []
+          attackBonus: strengthMod+proficiencyBonus
+  _v: 2
