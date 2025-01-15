@@ -30,6 +30,6 @@ Usage: `!gHarvest [options] [effect] -t <target>`
 
 Steps:
 1. **One-Step**: `!gHarvest <effect> -t <target> [options]` can cast + apply in one go.
-2. **Two-Step**:
--- `!gHarvest -t <dying target> [options]` to cast **Grim Harvest** and gain the effect on caster for 10 rounds.
--- Then `!gHarvest -t <target> <effect> [options]` to apply that effect & gain THP.
+2. **Two-Step**: 
+- `!gHarvest -t <dying target> [options]` to cast **Grim Harvest** and gain the effect on caster for 10 rounds.
+- Then `!gHarvest -t <target> <effect> [options]` to apply that effect & gain THP.
