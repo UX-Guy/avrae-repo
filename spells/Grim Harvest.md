@@ -1,4 +1,5 @@
 **Description**
+
 You reap the life force of a dying creature and use it to empower the next spell you cast. Your target must be at 0 hit points and dying or must have died within the last round. If the target is dying, it must succeed on a Constitution saving throw or die.
 
 The next time you cast a spell, you gain 1d10 + your spellcasting ability modifier in temporary hit points and can choose one of the following effects to inflict on the target in addition to the usual effects of the spell you are casting. If you do not cast another spell within 1 minute of casting this one, the effect is lost.
