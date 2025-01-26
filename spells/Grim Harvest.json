@@ -1,0 +1,459 @@
+{
+    "name": "Grim Harvest",
+    "level": 6,
+    "school": "N",
+    "automation": [
+        {
+            "type": "target",
+            "target": "self",
+            "effects": [
+                {
+                    "type": "ieffect2",
+                    "name": "Grim Harvest Effect Actions",
+                    "duration": "10",
+                    "attacks": [
+                        {
+                            "attack": {
+                                "_v": 2,
+                                "name": "Clumsiness (Grim Harvest)",
+                                "automation": [
+                                    {
+                                        "type": "target",
+                                        "target": "self",
+                                        "effects": [
+                                            {
+                                                "type": "temphp",
+                                                "amount": "({target.temp_hp} [Current THP],1d10 + {caster.spellbook.spell_mod})kh1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "all",
+                                        "effects": [
+                                            {
+                                                "type": "ieffect2",
+                                                "name": "Clumsiness",
+                                                "duration": "10",
+                                                "attacks": [],
+                                                "buttons": [
+                                                    {
+                                                        "automation": [
+                                                            {
+                                                                "type": "target",
+                                                                "target": "self",
+                                                                "effects": [
+                                                                    {
+                                                                        "type": "save",
+                                                                        "stat": "con",
+                                                                        "fail": [
+                                                                            {
+                                                                                "type": "text",
+                                                                                "text": "Speed remains halved; disadvantage on DEX checks/saves; CON save {{spell_dc}} at end of each turn to end effect",
+                                                                                "title": "Fails to resist Clumsiness"
+                                                                            }
+                                                                        ],
+                                                                        "success": [
+                                                                            {
+                                                                                "type": "remove_ieffect",
+                                                                                "removeParent": "always"
+                                                                            }
+                                                                        ],
+                                                                        "dc": "spell_dc"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "label": "Resist Clumsiness (End of Turn)",
+                                                        "verb": "attempts to resist Clumsiness",
+                                                        "style": "4",
+                                                        "defaultDC": "spell_dc"
+                                                    }
+                                                ],
+                                                "end": true,
+                                                "conc": false,
+                                                "desc": "Speed halved; disadvantage on DEX checks/saves; CON save DC {{spell_dc}} at end of each turn to end effect.",
+                                                "stacking": false,
+                                                "target_self": false,
+                                                "tick_on_caster": false
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "Your target's speed is halved for 1 minute, and it has disadvantage on Dexterity ability checks and saving throws. At the end of each of its turns, it can make a Constitution saving throw. If it succeeds, the effect ends.",
+                                        "title": "Clumsiness"
+                                    },
+                                    {
+                                        "type": "remove_ieffect",
+                                        "removeParent": "always"
+                                    }
+                                ],
+                                "verb": "inflicts",
+                                "activation_type": 2
+                            },
+                            "defaultCastingMod": "spell_dc"
+                        },
+                        {
+                            "attack": {
+                                "_v": 2,
+                                "name": "Weakness (Grim Harvest)",
+                                "automation": [
+                                    {
+                                        "type": "target",
+                                        "target": "self",
+                                        "effects": [
+                                            {
+                                                "type": "temphp",
+                                                "amount": "({target.temp_hp} [Current THP],1d10 + {caster.spellbook.spell_mod})kh1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "all",
+                                        "effects": [
+                                            {
+                                                "type": "ieffect2",
+                                                "name": "Weakness",
+                                                "duration": "10",
+                                                "attacks": [],
+                                                "buttons": [
+                                                    {
+                                                        "automation": [
+                                                            {
+                                                                "type": "target",
+                                                                "target": "self",
+                                                                "effects": [
+                                                                    {
+                                                                        "type": "save",
+                                                                        "stat": "con",
+                                                                        "fail": [
+                                                                            {
+                                                                                "type": "text",
+                                                                                "text": "Deals minimum melee damage; CON save DC {spell_dc} at end of each turn to end effect.",
+                                                                                "title": "Fails to resist Weakness"
+                                                                            }
+                                                                        ],
+                                                                        "success": [
+                                                                            {
+                                                                                "type": "remove_ieffect",
+                                                                                "removeParent": "always"
+                                                                            }
+                                                                        ],
+                                                                        "dc": "{spell_dc}"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "label": "Resist Weakness (End of Turn)",
+                                                        "verb": "attempts to resist Weakness",
+                                                        "style": "4",
+                                                        "defaultDC": "spell_dc"
+                                                    }
+                                                ],
+                                                "end": true,
+                                                "conc": false,
+                                                "desc": "Deals minimum melee damage; CON save DC {{spell_dc}} at end of each turn to end effect.",
+                                                "stacking": false,
+                                                "target_self": false,
+                                                "tick_on_caster": false
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "The target deals the minimum possible damage on melee attacks, if it hits, for 1 minute. At the end of each of its turns, it can make a Constitution saving throw. If it succeeds, the effect ends.",
+                                        "title": "Weakness"
+                                    },
+                                    {
+                                        "type": "remove_ieffect",
+                                        "removeParent": "always"
+                                    }
+                                ],
+                                "verb": "inflicts",
+                                "activation_type": 2
+                            }
+                        },
+                        {
+                            "attack": {
+                                "_v": 2,
+                                "name": "Vampiric (Grim Harvest)",
+                                "automation": [
+                                    {
+                                        "type": "counter",
+                                        "counter": "damage you dealt",
+                                        "amount": "0",
+                                        "allowOverflow": false,
+                                        "errorBehaviour": "ignore"
+                                    },
+                                    {
+                                        "type": "variable",
+                                        "name": "vampAmt",
+                                        "value": "lastCounterRequestedAmount",
+                                        "onError": "0"
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "self",
+                                        "effects": [
+                                            {
+                                                "type": "temphp",
+                                                "amount": "({target.temp_hp} [Current THP],1d10 + {caster.spellbook.spell_mod})kh1"
+                                            }
+                                            ]
+                                        },
+                                        {
+                                            "type": "target",
+                                            "target": "self",
+                                            "effects": [
+                                                {
+                                                    "type": "temphp",
+                                                    "amount": "({target.temp_hp} [Current THP], ({vampAmt}/2) [Vampiric THP])kh1"
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": "You recover a number of hit points equal to half the damage you dealt. If you dealt damage to multiple creatures, you recover half the amount of damage you dealt to one of the targets.",
+                                                    "title": "Vampiric"
+                                                },
+                                                {
+                                                    "type": "remove_ieffect",
+                                                    "removeParent": "always"
+                                                }
+                                                ]
+                                            }
+                                    ],
+                                "verb": "uses",
+                                "display_override": "Use `-amt <damage you dealt>` to recover a number of hit points equal to half the damage you dealt.",
+                                "activation_type": 2
+                            }
+                        },
+                        {
+                            "attack": {
+                                "_v": 2,
+                                "name": "Withering (Grim Harvest)",
+                                "automation": [
+                                    {
+                                        "type": "counter",
+                                        "counter": "attack count",
+                                        "amount": "1",
+                                        "allowOverflow": false,
+                                        "errorBehaviour": "ignore"
+                                    },
+                                    {
+                                        "type": "variable",
+                                        "name": "choice",
+                                        "value": "int(choice.lower().split('d')[-1])",
+                                        "onError": "6"
+                                    },
+                                    {
+                                        "type": "roll",
+                                        "dice": "{lastCounterRequestedAmount*4}d{choice} [necrotic]",
+                                        "name": "wDmg",
+                                        "hidden": false,
+                                        "displayName": "Withering"
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "self",
+                                        "effects": [
+                                            {
+                                                "type": "temphp",
+                                                "amount": "({target.temp_hp} [Current THP],1d10 + {caster.spellbook.spell_mod})kh1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "all",
+                                        "effects": [
+                                            {
+                                                "type": "condition",
+                                                "condition": "lastCounterRequestedAmount and choice",
+                                                "onTrue": [
+                                                    {
+                                                        "type": "damage",
+                                                        "damage": "{wDmg}",
+                                                        "overheal": false
+                                                    },
+                                                    {
+                                                        "type": "remove_ieffect",
+                                                        "removeParent": "always"
+                                                    }
+                                                ],
+                                                "onFalse": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "Please provide all the required options\n\n- `-choice` Damage die size for the spell\n[d4, d6, d8, d10, d12, d20] (default: d6)\n- `    -amt` Amount of hits made with this spell (default: 1)\n- `     -t` Targets hit with this spell",
+                                                        "title": "Required Fields"
+                                                    }
+                                                ],
+                                                "errorBehaviour": "false"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "You deal an extra 4 dice of damage of the same type as the damage dice of the spell and all damage dealt by your spell becomes necrotic damage.",
+                                        "title": "Withering"
+                                    }
+                                ],
+                                "verb": "inflicts",
+                                "activation_type": 2
+                            }
+                        },
+                        {
+                            "attack": {
+                                "_v": 2,
+                                "name": "Fatiguing (Grim Harvest)",
+                                "automation": [
+                                    {
+                                        "type": "target",
+                                        "target": "self",
+                                        "effects": [
+                                            {
+                                                "type": "temphp",
+                                                "amount": "({target.temp_hp} [Current THP],1d10 + {caster.spellbook.spell_mod})kh1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "target",
+                                        "target": "all",
+                                        "effects": [
+                                            {
+                                                "type": "roll",
+                                                "dice": "1d4",
+                                                "name": "fatRoll",
+                                                "hidden": false,
+                                                "displayName": "Fatiguing"
+                                            },
+                                            {
+                                                "type": "variable",
+                                                "name": "newVal",
+                                                "value": "fatRoll",
+                                                "onError": "1"
+                                            },
+                                            {
+                                                "type": "variable",
+                                                "name": "bonusVal",
+                                                "value": "-2 * newVal",
+                                                "onError": "-2"
+                                            },
+                                            {
+                                                "type": "save",
+                                                "stat": "con",
+                                                "fail": [
+                                                    {
+                                                        "type": "ieffect2",
+                                                        "name": "Exhaustion Level: {newVal}",
+                                                        "effects": {
+                                                            "to_hit_bonus": "{bonusVal}",
+                                                            "save_bonus": "{bonusVal}",
+                                                            "check_bonus": "{bonusVal}"
+                                                        },
+                                                        "attacks": [],
+                                                        "buttons": [],
+                                                        "end": false,
+                                                        "conc": false,
+                                                        "desc": "Exhaustion is cumulative. You die at 6 levels. -2 to D20 Tests and Speed is reduced by 5 ft per level of Exhaustion.",
+                                                        "stacking": true,
+                                                        "save_as": "fatigued",
+                                                        "target_self": false,
+                                                        "tick_on_caster": false
+                                                    }
+                                                ],
+                                                "success": [
+                                                    {
+                                                        "type": "ieffect2",
+                                                        "name": "Exhaustion Level: 1",
+                                                        "effects": {
+                                                            "to_hit_bonus": "-2",
+                                                            "save_bonus": "-2",
+                                                            "check_bonus": "-2"
+                                                        },
+                                                        "attacks": [],
+                                                        "buttons": [],
+                                                        "end": false,
+                                                        "conc": false,
+                                                        "desc": "Exhaustion is cumulative. You die at 6 levels. -2 to D20 Tests and Speed is reduced by 5 ft per level of Exhaustion.",
+                                                        "stacking": true,
+                                                        "save_as": "fatigued",
+                                                        "target_self": false,
+                                                        "tick_on_caster": false
+                                                    }
+                                                ],
+                                                "dc": "{spell_dc}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "Your target must make a Constitution saving throw, gaining 1d4 levels of exhaustion on a failed save or 1 level of exhaustion on a successful one.",
+                                        "title": "Fatiguing"
+                                    },
+                                    {
+                                        "type": "remove_ieffect",
+                                        "removeParent": "always"
+                                    }
+                                ],
+                                "verb": "inflicts",
+                                "activation_type": 2
+                            }
+                        }
+                    ],
+                    "buttons": [],
+                    "end": true,
+                    "conc": false,
+                    "stacking": false,
+                    "save_as": "ghActions",
+                    "target_self": false,
+                    "tick_on_caster": false
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "text": "You reap the life force of a dying creature and use it to empower the next spell you cast. Your target must be at 0 hit points and dying or must have died within the last round. If the target is dying, it must succeed on a Constitution saving throw or die. \n\nThe next time you cast a spell, you gain 1d10 + your spellcasting ability modifier in temporary hit points and can choose one of the following effects to inflict on the target in addition to the usual effects of the spell you are casting. If you do not cast another spell within 1 minute of casting this one, the effect is lost.\n\n**Actions Available:**\nClumsiness, Fatiguing, Vampiric, Weakness, Withering",
+            "title": "Description"
+        },
+        {
+            "type": "text",
+            "text": "Your target's speed is halved for 1 minute, and it has disadvantage on Dexterity ability checks and saving throws. At the end of each of its turns, it can make a Constitution saving throw. If it succeeds, the effect ends.\n\n*Usage:*\n`      -t target` Set target for the effect",
+            "title": "Clumsiness"
+        },
+        {
+            "type": "text",
+            "text": "Your target must make a Constitution saving throw, gaining 1d4 levels of exhaustion on a failed save or 1 level of exhaustion on a successful one.\n\n*Usage:*\n`      -t target` Set target for the effect",
+            "title": "Fatiguing"
+        },
+        {
+            "type": "text",
+            "text": "You recover a number of hit points equal to half the damage you dealt. If you dealt damage to multiple creatures, you recover half the amount of damage you dealt to one of the targets.\n\n*Usage:*\n`      -t target` Set target for the effect\n`    -amt damage` Damage applied to one target | half will be used for THP",
+            "title": "Vampiric"
+        },
+        {
+            "type": "text",
+            "text": "The target deals the minimum possible damage on melee attacks, if it hits, for 1 minute. At the end of each of its turns, it can make a Constitution saving throw. If it succeeds, the effect ends.\n\n*Usage:*\n`      -t target` Set target for the effect",
+            "title": "Weakness"
+        },
+        {
+            "type": "text",
+            "text": "You deal an extra 4 dice of damage of the same type as the damage dice of the spell and all damage dealt by your spell becomes necrotic damage.\n\n*Usage:*\n` -choice dieSize` (default d6) Damage die used by the spell \n`      -t target` Set target for the effect\n`    -amt hits  ` (default 1) Number of times the spell damaged the target",
+            "title": "Withering"
+        }
+    ],
+    "classes": "Cleric, Druid, Warlock, Wizard",
+    "casttime": "1 Bonus Action",
+    "range": "Self (30 ft. sphere)",
+    "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": "a pinch of gray sand and a bone chip"
+    },
+    "duration": "Instantaneous",
+    "ritual": false,
+    "description": "You reap the life force of a dying creature and use it to empower the next spell you cast. Your target must be at 0 hit points and dying or must have died within the last round. If the target is dying, it must succeed on a Constitution saving throw or die. \n\nThe next time you cast a spell, you gain 1d10 + your spellcasting ability modifier in temporary hit points and can choose one of the following effects to inflict on the target in addition to the usual effects of the spell you are casting. If you do not cast another spell within 1 minute of casting this one, the effect is lost.\n\n**Actions Available:**\nClumsiness, Fatiguing, Vampiric, Weakness, Withering",
+    "higherlevels": "",
+    "concentration": false
+}
