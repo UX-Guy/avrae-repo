@@ -27,6 +27,7 @@ You recover a number of hit points equal to half the damage you dealt. If you de
 *Usage:*
 
 `      -t target` Set target for the effect
+
 `    -amt damage` Damage applied to one target | half will be used for THP
 
 **Weakness**
@@ -42,5 +43,7 @@ You deal an extra 4 dice of damage of the same type as the damage dice of the sp
 *Usage:*
 
 ` -choice dieSize` (default d6) Damage die used by the spell 
+
 `      -t target` Set target for the effect
+
 `    -amt hits  ` (default 1) Number of times the spell damaged the target
