@@ -1,0 +1,16 @@
+!snippet rWish <drac2>
+cc_name = "Ring of Three Wishes"
+ch = character()
+ch.create_cc_nx(cc_name,0,3,None,"star",desc="While wearing this ring, you can expend 1 of its 3 charges to cast Wish from it. The ring becomes nonmagical when you use the last charge.\nItem | free-rules 193")
+cc = ch.cc_exists(cc_name) if ch.cc_exists(cc_name) else False
+cc_use = ch.get_cc(cc_name) if ch.get_cc(cc_name) >= 1 else False
+cc_last = ch.get_cc(cc_name) if ch.get_cc(cc_name) == 1 else False
+last = f"""**Last Charge**
+    The ring becomes nonmagical when you use the last charge.\n\n""" if cc_last else ""
+
+if cc and cc_use:
+    ch.mod_cc(cc_name, -1)
+    return f""" -phrase "Casts the spell using a **Wish**." -i -f "{cc_name}|While wearing this ring, you can expend 1 of its 3 charges to cast Wish from it. The ring becomes nonmagical when you use the last charge." -f "Wish Spell|Wish is the mightiest spell a mortal can cast. By simply speaking aloud, you can alter reality itself.\n\nThe basic use of this spell is to duplicate any other spell of level 8 or lower. If you use it this way, you don't need to meet any requirements to cast that spell, including costly components. The spell simply takes effect.\n\n{last}**{cc_name}**\n{ch.cc_str(cc_name)} (-1)" """
+else: 
+    return f""" -f "{cc_name}|This ring became nonmagical when you used the last charge.\n\n**{cc_name}**\n{ch.cc_str(cc_name)} (0)" """
+</drac2>
