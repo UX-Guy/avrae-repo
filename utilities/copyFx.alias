@@ -1,0 +1,122 @@
+embed <drac2>
+args = argparse(&ARGS&)
+c = combat()
+
+# Parse arguments
+fxName = args.last('fx', '')
+source_name = args.last('c', None)
+target_names = args.get('t', [])
+debug = args.last('debug', None)
+
+# Fetch source and target combatants
+source = c.get_combatant(source_name) if c else None
+targets = [c.get_combatant(t) for t in target_names] if c else []
+
+# Initialize embed variables
+title = "Copy Effects"
+desc = ""
+eg = "`!copyFx -c <source> -fx <effect> -t <target 1> -t <target 2> [debug]`"
+footer = "!copyFx -c <source> -fx <effect> -t <target 1> -t <target 2> | @theuxguy - https://ko-fi.com/theuxguy"
+docs = f"""
+
+This is alias will copy an effect from one combatant to another, including automations such as buttons and actions.  
+
+**Usage:**
+{eg}
+`     -c` Copy from Combatant
+`     -t` Apply to Combatant(s)
+`    -fx` Effect name we are copying (partials accepted)
+`  debug` Display debug information
+
+Use this to spread an effect to a combatant as they enter a spell effect area. No need to recast a spell."""
+
+
+# Initialize `source_effect` to avoid referencing undefined variables
+source_effect = None
+
+if not c:
+    desc = "There is no active combat. This command requires an active combat to function."+docs
+else:
+    if not source:
+        desc = f"Source combatant '{source_name}' not found. Ensure the name is correct and the combatant exists in the combat."+docs
+    elif not target_names:
+        desc = f"At least one target combatant (-t) is required to copy an effect.\n\n {eg}"
+    elif not fxName:
+        desc = f"Effect name (-fx) is required to copy an effect.\n\n {eg}"
+    else:
+        # Fetch effect from the source combatant with improved matching
+        matching_effects = [effect for effect in source.effects if fxName.lower() in effect.name.lower()]
+        if len(matching_effects) > 1:
+            desc = f"Multiple effects match '{fxName}': {[effect.name for effect in matching_effects]}. Please refine your input."
+        elif matching_effects:
+            source_effect = matching_effects[0]
+        else:
+            desc = f"No effect matching '{fxName}' found on '{source.name}'."
+
+        if source_effect:
+            # Copy the effect to each target combatant
+            for target in targets:
+                if target:
+                    try:
+                        target.add_effect(
+                            source_effect.name,
+                            duration=source_effect.duration if source_effect.duration else -1,
+                            desc=source_effect.desc if source_effect.desc else "",
+                            buttons=source_effect.buttons if source_effect.buttons else [],
+                            attacks=source_effect.attacks if source_effect.attacks else None,
+                        )
+
+                        title = f"Copy Effects: '{source_effect.name}'"
+                        desc += f"""
+                        **Source**: {source.name}
+
+                        **Target**: {target.name}
+                        **Effect Name**: {source_effect.name if source_effect else None}
+                        **Duration**: {source_effect.duration if source_effect else None}
+                        **Description**: {source_effect.desc if source_effect else None}
+                        
+                        **Buttons**: {"Copied" if source_effect.buttons else None}
+                        **Attacks**: {"Copied" if source_effect.attacks else None}
+                        """
+                        
+                    except:
+                        desc += (
+                            f"An error occurred while copying the effect '{fxName}' to '{target.name}'. Ensure all parameters are valid."
+                        )
+                else:
+                    desc += f"Target combatant '{target}' not found. Ensure the name is correct and the combatant exists in the combat."
+
+# Debug for troubleshooting
+if debug is not None:
+    debug1 = f"""
+    Source: {source_name} -> {source}
+    Target: {target_names} -> {targets}
+    Effect Name (Search): {fxName if fxName else 'None'}
+    Available Effects on Source: {[effect.name for effect in source.effects] if source else 'None'}
+    Effect Found: {source_effect if source_effect else 'None'}
+
+    Effect Details: 
+    Name: {source_effect.name if source_effect else 'None'}
+    Duration: {source_effect.duration if source_effect else 'None'}
+    Description: {source_effect.desc if source_effect else 'None'}
+    """
+    debug2 = f"Buttons: {source_effect.buttons if source_effect else 'None'}"
+    debug3 = f"Parent: {source_effect.parent if source_effect else 'None'}"
+    debug4 = f"Attacks: {source_effect.attacks if source_effect else 'None'}"
+    debug5 = f"""
+    Effects: {source_effect}
+
+    Get Effect: {source.get_effect(fxName)}
+    """
+else:
+    debug = ""
+
+</drac2>
+-title "{{title}}"
+-desc "{{desc}}"
+-footer """{{footer}}"""
+
+{{ "-f \"" + debug1 + "\"" if debug else "" }}
+{{ "-f \"" + debug2 + "\"" if debug else "" }}
+{{ "-f \"" + debug3 + "\"" if debug else "" }}
+{{ "-f \"" + (debug4[:1000] + '...' if len(debug4) > 1000 else debug4) + "\"" if debug else "" }}
